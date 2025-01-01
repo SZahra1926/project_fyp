@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Generator</title>
+    <style>
+        /* Paste the CSS here */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text Generator</h1>
+        <form id="text-form">
+            <input type="text" id="input-text" placeholder="Enter text" required>
+            <button type="submit">Generate Text</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <script>
+        document.getElementById('text-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const inputText = document.getElementById('input-text').value;
+            fetch(`/generate-text/?input=${encodeURIComponent(inputText)}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = data.generated_text || data.error;
+                });
+        });
+    </script>
+</body>
+</html>
